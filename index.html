@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,15 +6,20 @@
   <link rel="stylesheet" href="style.css">
   <title>Weather API</title>
 </head>
-<!--  read SWR  -->
 <body>
   <h1>Weather Information</h1>
   <label for="cityInput">Enter City:</label>
-  <input type="text" id="cityInput">
-  <button onclick="getWeather()">Get Weather</button>
+  <div id="button">
+    <input type="text" id="cityInput">
+    <button onclick="getWeather()">Get Weather</button>
+  </div>
   <div id="weatherInfo"></div>
 
   <script>
+
+    function farenheitToCelsius(farenheit) {
+      return (farenheit - 32) * 5 / 9;
+    }
     function getWeather() {
       // Get the city name from the input field
       var city = document.getElementById("cityInput").value;
@@ -32,11 +37,14 @@
           // Display the weather information
           document.getElementById("weatherInfo").innerHTML = `
             <h2>Weather in ${cityName}</h2>
-            <p>Temperature: ${temperature} K</p>
+            <p>Temperature: ${farenheitToCelsius(temperature).toFixed(2)}°C</p>
             <p>Description: ${description}</p>
-            p>Humidity: ${data.main.humidity}</p>
+            <p>Humidity: ${data.main.humidity}</p>
             <p>Wind Speed: ${data.wind.speed}</p>
+            <p>timezone: ${data.timezone}</p>
+            <p> Sunset: ${new Date(data.sys.sunset * 1000).toLocaleTimeString()}</p>
             <p> Sunrise: ${new Date(data.sys.sunrise * 1000).toLocaleTimeString()}</p>
+            <p>time now: ${new Date(data.dt * 1000).toLocaleTimeString()}</p>
           `;
         })
         .catch(error => {
@@ -46,4 +54,4 @@
     }
   </script>
 </body>
-</html> -->
+</html> 
